@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>理想汽车 英文术语对照库</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <h1>理想汽车 英文术语对照库</h1>
+      <span class="term-count" id="term-count">加载中…</span>
+    </div>
+    <button class="btn btn-primary" id="add-term-btn">+ 新增词条</button>
+  </header>
+
+  <!-- Search -->
+  <div class="search-wrapper">
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input"
+             placeholder="搜索中文 / 英文 / 缩写…" autocomplete="off">
+      <button class="search-clear hidden" id="search-clear">✕</button>
+    </div>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="main-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div id="category-list" class="category-list"></div>
+      <div class="add-category-area">
+        <button class="btn-add-category" id="add-category-btn">+ 新增分类</button>
+        <div class="add-category-input hidden" id="add-category-input-wrap">
+          <input type="text" id="new-category-input" placeholder="输入分类名称…">
+          <div class="input-actions">
+            <button class="btn-confirm" id="confirm-add-category">确认</button>
+            <button class="btn-cancel"  id="cancel-add-category">取消</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Terms -->
+    <main class="terms-area">
+      <div id="results-info" class="results-info hidden"></div>
+      <div id="terms-grid" class="terms-grid"></div>
+      <div id="empty-state" class="empty-state hidden">
+        <div class="empty-icon">🔍</div>
+        <p id="empty-text">未找到相关术语</p>
+        <button class="btn btn-outline" id="empty-add-btn">+ 新增该词条</button>
+      </div>
+      <div id="loading-state" class="loading-state">
+        <div class="spinner"></div>
+        <p>加载中…</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    数据来源：Li Auto 官方 SEC 备案文件（20-F 年报及季度 6-K 报告）
+  </footer>
+</div>
+
+<!-- ── 词条 Modal ─────────────────────────────────────────────────────── -->
+<div id="term-modal" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">新增词条</h2>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    <form id="term-form" class="modal-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>中文术语 <span class="required">*</span></label>
+          <input type="text" id="field-zh" placeholder="输入中文术语" required>
+        </div>
+        <div class="form-group">
+          <label>英文对应 <span class="required">*</span></label>
+          <input type="text" id="field-en" placeholder="输入英文对应" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>缩写 <span class="optional">可选</span></label>
+          <input type="text" id="field-abbr" placeholder="如 EREV、NOA">
+        </div>
+        <div class="form-group">
+          <label>分类 <span class="required">*</span></label>
+          <select id="field-category" required>
+            <option value="">请选择分类</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>官方来源 <span class="optional">可选</span></label>
+        <input type="text" id="field-source"
+               placeholder="如 Li Auto 20-F Annual Report 2023">
+      </div>
+      <div class="form-group">
+        <label>备注 <span class="optional">可选</span></label>
+        <textarea id="field-notes" placeholder="补充说明…" rows="2"></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-outline" id="form-cancel">取消</button>
+        <button type="submit"  class="btn btn-primary" id="form-submit">保存词条</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ── 确认对话框 ──────────────────────────────────────────────────────── -->
+<div id="confirm-overlay" class="modal-overlay hidden">
+  <div class="modal confirm-modal">
+    <div class="confirm-icon">⚠️</div>
+    <h3 id="confirm-title">确认操作</h3>
+    <p  id="confirm-message">此操作不可撤销。</p>
+    <div class="form-actions">
+      <button class="btn btn-outline" id="confirm-cancel">取消</button>
+      <button class="btn btn-danger"  id="confirm-ok">确认</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Toast ──────────────────────────────────────────────────────────── -->
+<div id="toast" class="toast"></div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
