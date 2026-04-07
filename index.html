@@ -19,6 +19,15 @@
     <button class="btn btn-primary" id="add-term-btn">+ 新增词条</button>
   </header>
 
+  <!-- Tab Nav -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" data-tab="terms">词条查询</button>
+    <button class="tab-btn"        data-tab="checker">术语核查</button>
+  </nav>
+
+  <!-- ── Tab: 词条查询 ─────────────────────────────────────── -->
+  <div id="tab-terms" class="tab-panel">
+
   <!-- Search -->
   <div class="search-wrapper">
     <div class="search-bar">
@@ -67,6 +76,46 @@
   <footer class="footer">
     数据来源：Li Auto 官方 SEC 备案文件（20-F 年报及季度 6-K 报告）
   </footer>
+
+  </div><!-- /tab-terms -->
+
+  <!-- ── Tab: 术语核查 ─────────────────────────────────────── -->
+  <div id="tab-checker" class="tab-panel hidden">
+    <div class="checker-layout">
+
+      <!-- Left: input / result -->
+      <div class="checker-left">
+
+        <!-- Input state -->
+        <div id="checker-input-state">
+          <textarea id="checker-input" class="checker-textarea"
+            placeholder="在此粘贴需要核查的英文内容，支持中英混排，系统将自动识别英文部分…"></textarea>
+          <div class="checker-input-footer">
+            <span id="checker-char-count" class="char-count"></span>
+            <button class="btn btn-primary" id="checker-run-btn">开始核查</button>
+          </div>
+        </div>
+
+        <!-- Result state -->
+        <div id="checker-result-state" class="hidden">
+          <div class="checker-result-toolbar">
+            <button class="btn btn-outline" id="checker-reset-btn">← 重新输入</button>
+            <button class="btn btn-outline" id="checker-copy-btn">复制结果</button>
+          </div>
+          <div id="checker-display" class="checker-display"></div>
+        </div>
+
+      </div>
+
+      <!-- Right: issue list -->
+      <div class="checker-right">
+        <div id="checker-issue-summary" class="issue-summary hidden"></div>
+        <div id="checker-issue-list"    class="issue-list"></div>
+        <div id="checker-all-done"      class="all-done hidden">✓ 全部问题已处理</div>
+      </div>
+
+    </div>
+  </div><!-- /tab-checker -->
 </div>
 
 <!-- ── 词条 Modal ─────────────────────────────────────────────────────── -->
@@ -136,6 +185,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
 <script src="app.js"></script>
+<script src="checker.js"></script>
 
 </body>
 </html>

@@ -25,6 +25,7 @@ async function init() {
     renderCategories();
     renderTerms();
     setupEventListeners();
+    initChecker();
   } catch (err) {
     console.error('初始化失败:', err);
     showToast('加载失败，请刷新页面重试');
@@ -217,6 +218,16 @@ function termCard(term, matches) {
 
 // ── Event listeners ─────────────────────────────────────────────────────────
 function setupEventListeners() {
+  // ── Tab switching ──────────────────────────────────────────────────────
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById(`tab-${tab}`).classList.remove('hidden');
+    });
+  });
   // Search
   const searchInput = document.getElementById('search-input');
   const searchClear = document.getElementById('search-clear');
